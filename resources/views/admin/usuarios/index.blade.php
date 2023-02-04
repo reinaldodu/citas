@@ -33,7 +33,13 @@
                             <!-- row 1 -->
                             @foreach ($usuarios as $usuario)
                             <tr>
-                                <td>{{ $usuario->nombres .' ' . $usuario->apellidos }}</td>
+                                <td>
+                                    <div class="tooltip tooltip-right" data-tip=" Consultar usuario: {{ $usuario->nombres .' ' . $usuario->apellidos }}"">
+                                    <a class="font-bold btn-ghost rounded-lg" href="{{ route('usuarios.show', $usuario->id) }}">
+                                        {{ $usuario->nombres .' ' . $usuario->apellidos }}
+                                    </a>
+                                    </div>
+                                </td>
                                 <td>{{ $usuario->documento }}</td>
                                 <td>{{ $usuario->telefono }}</td>
                                 <td>{{ $usuario->email }}</td>

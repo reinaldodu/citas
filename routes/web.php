@@ -30,7 +30,9 @@ Route::get('/dashboard', function () {
 Route::resource('/procedimientos', ProcedimientoController::class)->middleware(['auth', 'rol:admin']);
 
 //Ruta usuarios
-Route::resource('/usuarios', UserController::class)->middleware(['auth', 'rol:admin']);
+Route::resource('/usuarios', UserController::class)->middleware(['auth', 'rol:admin'])->parameter('usuarios', 'user');
+//Ruta cambiar contraseña de usuario
+Route::put('/usuarios/{user}/password', [UserController::class, 'password'])->name('usuarios.password')->middleware(['auth', 'rol:admin']);
 
 //Ruta agendas
 Route::resource('/agendas', AgendaController::class)->middleware(['auth', 'rol:admin']);

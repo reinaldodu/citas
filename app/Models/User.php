@@ -61,6 +61,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cita::class);
     }
+    public function agendas()
+    {
+        return $this->hasMany(Agenda::class);
+    }
+    public function procedimientos()
+    {
+        return $this->belongsToMany(Procedimiento::class);
+    }
 
     //getters activo
     public function getActivoAttribute()
