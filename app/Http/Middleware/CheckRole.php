@@ -19,14 +19,10 @@ class CheckRole
         if ($rol == 'admin' && auth()->user()->rol_id != 1) {
             abort(403);
         }
-        if ($rol == 'paciente' && auth()->user()->rol_id != 2) {
+        if ($rol == 'medico' && auth()->user()->rol_id != 2) {
             abort(403);
         }
-        if ($rol == 'doctor' && auth()->user()->rol_id != 3) {
-            abort(403);
-        }
-
-        if ($rol == 'secretaria' && auth()->user()->rol_id != 4) {
+        if ($rol == 'paciente' && auth()->user()->rol_id != 3) {
             abort(403);
         }
 

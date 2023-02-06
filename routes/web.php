@@ -6,6 +6,7 @@ use App\Http\Controllers\ProcedimientoController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Ruta dashboard
+Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth'])->name('dashboard');
 
 //Ruta procedimientos
 Route::resource('/procedimientos', ProcedimientoController::class)->middleware(['auth', 'rol:admin']);

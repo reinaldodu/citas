@@ -12,7 +12,7 @@
                     
                     {{-- Botón crear procedimiento --}}
                     <div class="flex justify-end mb-5">
-                        <a href="{{ route('procedimientos.create') }}" class="btn btn-sm btn-outline btn-primary">Crear Procedimiento</a>
+                        <a href="{{ route('procedimientos.create') }}" class="btn btn-outline btn-primary rounded-full">Crear Procedimiento</a>
                     </div>
 
                         <div class="grid grid-cols-4 gap-3">

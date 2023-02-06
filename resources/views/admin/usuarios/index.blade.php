@@ -12,7 +12,7 @@
                     
                     {{-- Botón crear un usuario --}}
                     <div class="flex justify-end mb-5">
-                        <a href="{{ route('usuarios.create') }}" class="btn btn-outline btn-primary">Crear Usuario</a>
+                        <a href="{{ route('usuarios.create') }}" class="btn btn-outline btn-primary rounded-full">Crear Usuario</a>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -22,6 +22,7 @@
                             <tr>
                               <th>Nombre</th>
                               <th>Documento</th>
+                              <th>Fecha_nacimiento</th>
                               <th>Teléfono</th>
                               <th>Email</th>
                               <th>Rol</th>
@@ -41,6 +42,12 @@
                                     </div>
                                 </td>
                                 <td>{{ $usuario->documento }}</td>
+                                <td>
+                                    {{ $usuario->fecha_nacimiento }}
+                                    <div class="badge badge-sm badge-outline">
+                                        {{ $usuario->edad }} años
+                                    </div>
+                                </td>
                                 <td>{{ $usuario->telefono }}</td>
                                 <td>{{ $usuario->email }}</td>
                                 <td>{{ $usuario->rol->nombre }}</td>

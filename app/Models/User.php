@@ -70,10 +70,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Procedimiento::class);
     }
 
-    //getters activo
+    //getter activo/inactivo
     public function getActivoAttribute()
     {
         return $this->estado == 1 ? 'Activo' : 'Inactivo';
+    }
+
+    //getter edad
+    public function getEdadAttribute()
+    {
+        return \Carbon\Carbon::parse($this->fecha_nacimiento)->age;
     }
 
 

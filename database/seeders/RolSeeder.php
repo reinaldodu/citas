@@ -21,17 +21,14 @@ class RolSeeder extends Seeder
                 'descripcion' => 'Administrador del sistema',
             ],
             [
-                'nombre' => 'Paciente',
-                'descripcion' => 'Paciente del sistema',
-            ],
-            [
                 'nombre' => 'Médico',
                 'descripcion' => 'Médico del sistema',
             ],
             [
-                'nombre' => 'Secretaria',
-                'descripcion' => 'Secretaria del sistema',
+                'nombre' => 'Paciente',
+                'descripcion' => 'Paciente del sistema',
             ],
+                     
         ];
         //Crear los roles
         foreach ($roles as $rol) {

@@ -24,27 +24,23 @@ class DatabaseSeeder extends Seeder
         $this->call(RolSeeder::class);
         $this->call(ProcedimientoSeeder::class);
 
-        // Creamos un usuario administrador
+        // Creamos un usuario Administrador
         \App\Models\User::factory()->create([
-            'name' => 'SuperAdministrador',
+            'name' => 'Administrador',
             'email' => 'admin@email.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('1'),
             'rol_id' => 1,
-        ]);
-
-        //Creamos 200 usuarios pacientes
-        \App\Models\User::factory(200)->create([
-            'rol_id' => 2,
         ]);
 
         //Creamos 20 usuarios médicos
         \App\Models\User::factory(20)->create([
-            'rol_id' => 3,
+            'rol_id' => 2,
         ]);
+        
 
-        //Creamos 3 usuarios secretarias
-        \App\Models\User::factory(3)->create([
-            'rol_id' => 4,
+        //Creamos 200 usuarios pacientes
+        \App\Models\User::factory(200)->create([
+            'rol_id' => 3,
         ]);
 
         

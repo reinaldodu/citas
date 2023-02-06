@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        //Roles del sistema: 1=administrador, 2=medico, 3=paciente
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
