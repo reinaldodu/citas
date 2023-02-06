@@ -53,6 +53,35 @@
                                         </a>
                                     </div>
                                     
+                                    {{-- boton para desactivar usuario --}}
+                                    @if ($usuario->estado == 1)
+                                        <div class="tooltip tooltip-left" data-tip="Desactivar {{ $usuario->name }}">
+                                            <form action="{{ route('usuarios.estado', $usuario->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn-ghost rounded-lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+                                                      </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @else
+                                        {{-- boton para activar usuario --}}
+                                        <div class="tooltip tooltip-left" data-tip="Activar {{ $usuario->name }}">
+                                            <form action="{{ route('usuarios.estado', $usuario->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn-ghost rounded-lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16" class="w-4 h-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+                                                      </svg>
+                                                      
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                    
                                     {{-- No se eliminan usuarios, solamente se va a cambiar el estado del usuario activo a inactivo --}}
                                     
                                 </td>

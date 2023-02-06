@@ -17,8 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //Listar usuarios 20 por página
-        $usuarios = User::paginate(10);
+        //Listar todos los usuarios excepto el id 1 (Superadministrador)
+        $usuarios=User::where('id', '!=', 1)->paginate(10);
         return view('admin.usuarios.index', compact('usuarios'));
     }
 
@@ -155,5 +155,14 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
         return redirect()->route('usuarios.show', $user)->with('info', 'La contraseña se actualizó con éxito');
+    }
+
+    public function estado(User $user)
+    {
+        //cambiar estado activo/inactivo
+        $user->update([
+            'estado' => !$user->estado,
+        ]);
+        return redirect()->route('usuarios.index')->with('info', 'El estado se actualizó con éxito');
     }
 }

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('fecha');
             $table->time('hora');
             $table->foreignId('medico_id')->constrained('users');
-            $table->string('estado'); // disponible, ocupado, cancelado
-            $table->string('tipo'); // consulta, procedimiento, etc
+            $table->string('estado'); // 1=Disponible, 2=Ocupado, 3=Cancelado
+            $table->string('tipo'); // 1=Consulta, 2=Procedimiento
             $table->foreignId('procedimiento_id')->constrained('procedimientos');
             $table->timestamps();
         });

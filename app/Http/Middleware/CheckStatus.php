@@ -20,7 +20,7 @@ class CheckStatus
             auth()->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            return redirect()->route('login')->with('error', 'El usuario inactivo. Comuníquese con el administrador.');
+            return redirect()->route('login')->with('error', 'Usuario inactivo. Comuníquese con el administrador.');
         }
         return $next($request);
     }

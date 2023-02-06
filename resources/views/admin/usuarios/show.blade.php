@@ -22,18 +22,15 @@
                           <p> <span class="font-semibold">Teléfono:</span> {{ $user->telefono }}</p>
                           <p> <span class="font-semibold">Email:</span> {{ $user->email }}</p>
                           <p> <span class="font-semibold">Estado:</span> 
-                            @if ($user->estado == 1)
-                            <input type="checkbox" class="toggle" checked />
-                              <span class="badge badge-success">Activo</span>
-                            @else
-                              <input type="checkbox" class="toggle" />
-                              <span class="badge badge-error">Inactivo</span>
-                            @endif
-                            
+                              @if ($user->estado == 1)
+                                  <span class="badge badge-success">Activo</span>
+                              @else
+                                  <span class="badge badge-error">Inactivo</span>
+                              @endif
                           </p>
                           <div class="card-actions justify-end mt-10">
                             <label for="my-modal" class="btn btn-xs btn-primary">Cambiar contraseña</label>
-                            <a href="{{ route('usuarios.index') }}" class="btn btn-outline btn-primary ml-5">
+                            <a href="{{ route('usuarios.index') }}" class="btn btn-xs btn-outline btn-primary">
                               Cerrar
                           </a>
                           </div>
@@ -64,16 +61,15 @@
             </div>
           <div class="modal-action">
             <button type="submit" class="btn btn-primary">Guardar</button> 
-
             <label for="my-modal" class="btn">Cancelar</label>
+            {{-- Si hay errores en el formulario, se abre el modal --}}
+            @if ($errors->any())
+                <script>
+                  document.getElementById('my-modal').checked = true;
+                </script>
+            @endif
           </div>
         </form>
-        <script>
-              const form = document.querySelector('.form');
-              form.addEventListener('submit', (e) => e.preventDefault());
-        </script>
       </div>
     </div>
-
-
 </x-app-layout>

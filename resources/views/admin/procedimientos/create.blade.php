@@ -15,14 +15,14 @@
                         <!-- Nombre -->
                         <div>
                             <x-input-label for="nombre" :value="__('Nombre')" />
-                            <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required />
+                            <x-text-input id="nombre" class="input text-blue-500 block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required />
                             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                         </div>
 
                         <!-- Descripción -->
                         <div>
                             <x-input-label for="descripcion" :value="__('Descripcion')" />
-                            <x-text-input id="descripcion" class="block mt-1 w-full" type="text" name="descripcion" :value="old('descripcion')" />
+                            <x-text-input id="descripcion" class="input block mt-1 w-full" type="text" name="descripcion" :value="old('descripcion')" />
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
                         </div>
 

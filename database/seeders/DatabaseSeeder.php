@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'rol_id' => 1,
         ]);
 
-        //Creamos 400 usuarios pacientes
+        //Creamos 200 usuarios pacientes
         \App\Models\User::factory(200)->create([
             'rol_id' => 2,
         ]);

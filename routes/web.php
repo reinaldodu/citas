@@ -33,6 +33,8 @@ Route::resource('/procedimientos', ProcedimientoController::class)->middleware([
 Route::resource('/usuarios', UserController::class)->middleware(['auth', 'rol:admin'])->parameter('usuarios', 'user');
 //Ruta cambiar contraseña de usuario
 Route::put('/usuarios/{user}/password', [UserController::class, 'password'])->name('usuarios.password')->middleware(['auth', 'rol:admin']);
+//Ruta estado usuario (activar/desactivar usuario)
+Route::put('/usuarios/{user}/estado', [UserController::class, 'estado'])->name('usuarios.estado')->middleware(['auth', 'rol:admin']);
 
 //Ruta agendas
 Route::resource('/agendas', AgendaController::class)->middleware(['auth', 'rol:admin']);
