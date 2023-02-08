@@ -29,5 +29,27 @@ class Agenda extends Model
     {
         return $this->hasMany(Cita::class);
     }
+
+    //getter estado
+    public function getEstadoAttribute($estado)
+    {
+        if ($estado == 1) {
+            return 'Disponible';
+        } elseif ($estado == 2) {
+            return 'Ocupada';
+        } else {
+            return 'Cancelada';
+        }
+    }
+
+    //getter tipo
+    public function getTipoAttribute($tipo)
+    {
+        if ($tipo == 1) {
+            return 'Consulta';
+        } else {
+            return 'Procemiento';
+        }
+    }
     
 }
