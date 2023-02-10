@@ -16,7 +16,7 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agendas = Agenda::all();
+        $agendas = Agenda::paginate(10);
         return view('admin.agendas.index', compact('agendas'));
     }
 
@@ -27,7 +27,7 @@ class AgendaController extends Controller
      */
     public function create()
     {
-        $medicos = User::where('rol_id', 3)->get();
+        $medicos = User::where('rol_id', 2)->get();
         $procedimientos= Procedimiento::all();
         return view('admin.agendas.create', compact('medicos', 'procedimientos'));
     }
@@ -92,7 +92,9 @@ class AgendaController extends Controller
      */
     public function edit(Agenda $agenda)
     {
-        //
+        $medicos= User::where('rol_id', 2)->get();
+        $procedimientos= Procedimiento::all();
+        return view('admin.agendas.edit', compact('agenda', 'medicos', 'procedimientos'));
     }
 
     /**
@@ -104,7 +106,14 @@ class AgendaController extends Controller
      */
     public function update(Request $request, Agenda $agenda)
     {
-        //
+        $request->validate([
+            'fecha' => 'required',
+            'hora' => 'required',
+            'medico_id' => 'required',
+            'procedimiento_id' => 'required',
+        ]);
+        $agenda->update($request->all());
+        return redirect()->route('agendas.index')->with('success', 'Agenda actualizada correctamente');
     }
 
     /**

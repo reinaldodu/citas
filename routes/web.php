@@ -41,6 +41,10 @@ Route::resource('/agendas', AgendaController::class)->middleware(['auth', 'rol:a
 
 //Rutas citas
 Route::resource('/citas', CitaController::class)->middleware(['auth']);
+//Buscar citas
+Route::get('/citas_buscar', [CitaController::class, 'buscar'])->name('citas.buscar')->middleware(['auth']);
+//Ver Citas disponibles
+Route::post('/citas_disponibles', [CitaController::class, 'disponibles'])->name('citas.disponibles')->middleware(['auth']);
 
 
 Route::middleware('auth')->group(function () {

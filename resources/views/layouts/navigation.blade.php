@@ -18,31 +18,38 @@
                     </x-nav-link>
                 </div>
                 
-                <!--Usuarios-->
+                {{-- Si el usuario es administrador, se muestran los siguientes enlaces: --}}
                 @if (Auth::user()->rol_id == 1)
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
-                        {{ __('Usuarios') }}
-                    </x-nav-link>
-                </div>
-                @endif  
-                
-                <!--Procedimientos-->
-                @if (Auth::user()->rol_id == 1)
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('procedimientos.index')" :active="request()->routeIs('procedimientos.index')">
-                        {{ __('Procedimientos') }}
-                    </x-nav-link>
-                </div>
+                    <!--Usuarios-->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+                    </div>
+                    
+                    <!--Procedimientos-->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('procedimientos.index')" :active="request()->routeIs('procedimientos.index')">
+                            {{ __('Procedimientos') }}
+                        </x-nav-link>
+                    </div>
+
+                    <!--Agenda-->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('agendas.index')" :active="request()->routeIs('agendas.index')">
+                            {{ __('Agenda') }}
+                        </x-nav-link>
+                    </div>
                 @endif
 
-                <!--Agenda-->
-                @if (Auth::user()->rol_id == 1)
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('agendas.index')" :active="request()->routeIs('agendas.index')">
-                        {{ __('Agenda') }}
-                    </x-nav-link>
-                </div>
+                {{-- Si el usuario es paciente se muestran los siguientes enlaces: --}}
+                @if (Auth::user()->rol_id == 3)
+                    <!--Citas-->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('citas.buscar')" :active="request()->routeIs('citas.buscar')">
+                            {{ __('Agendar cita') }}
+                        </x-nav-link>
+                    </div>
                 @endif
 
             </div>

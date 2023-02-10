@@ -40,7 +40,7 @@
                                     {{ $agenda->hora }}
                                 </td>
                                 <td>
-                                    {{ $agenda->medico->nombres }}
+                                    {{ $agenda->medico->nombres . ' ' . $agenda->medico->apellidos }}
                                 </td>
                                 <td>
                                     {{ $agenda->procedimiento->nombre }}
@@ -71,15 +71,16 @@
                                             </button>
                                         </form>
                                     </div>
-
-
-
                                 </td>
                             </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
+                    {{-- Paginación --}}
+                        <div class="mt-5">
+                            {{ $agendas->links() }}
+                        </div>
                 </div>
             </div>
         </div>

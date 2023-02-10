@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'rol_id' => 3,
         ]);
 
-        
+        //Creamos 30 agendas
+        \App\Models\Agenda::factory(30)->create();
     }
 }
