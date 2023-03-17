@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="/">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
@@ -42,6 +42,24 @@
                     </div>
                 @endif
 
+                {{-- Si el usuario es médico se muestran los siguientes enlaces: --}}
+                @if (Auth::user()->rol_id == 2)
+                    <!--Citas del día-->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('citas.agenda_dia')" :active="request()->routeIs('citas.agenda_dia')">
+                            {{ __('Consultar agenda del día') }}
+                        </x-nav-link>
+                    </div>
+
+                    <!--Consultar historial médico-->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('citas.historial_medico')" :active="request()->routeIs('citas.historial_medico')">
+                            {{ __('Consultar historial') }}
+                        </x-nav-link>
+                    </div>
+                @endif
+
+
                 {{-- Si el usuario es paciente se muestran los siguientes enlaces: --}}
                 @if (Auth::user()->rol_id == 3)
                     <!--Citas-->
@@ -50,8 +68,17 @@
                             {{ __('Agendar cita') }}
                         </x-nav-link>
                     </div>
+
+                      <!--Consultar historial de citas-->
+                      <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('citas.index')" :active="request()->routeIs('citas.index')">
+                            {{ __('Consultar historial') }}
+                        </x-nav-link>
+                    </div>
+
                 @endif
 
+              
             </div>
 
             <!-- Settings Dropdown -->

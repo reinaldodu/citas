@@ -79,6 +79,14 @@ class ProcedimientoController extends Controller
      */
     public function update(Request $request, Procedimiento $procedimiento)
     {
+        if($request->has('activo'))
+        {
+            $request->merge(['activo'=>1]);
+        }
+        else
+        {
+            $request->merge(['activo'=>0]);
+        }
         //Actualizar procedimiento
         $request->validate([
             'nombre' => 'required',

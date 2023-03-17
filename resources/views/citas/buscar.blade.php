@@ -16,7 +16,7 @@
                         {{-- Fecha --}}
                         <div>
                             <x-input-label for="fecha" :value="__('Fecha')" />
-                            <x-text-input id="fecha" class="input input-bordered w-full max-w-xs" type="date" name="fecha" :value="old('fecha')" required />
+                            <x-text-input id="fecha" class="input input-bordered w-full max-w-xs" min="{{$fecha_min}}" type="date" name="fecha" :value="old('fecha')" required />
                             <x-input-error :messages="$errors->get('fecha')" class="mt-2" />
                         </div>
 

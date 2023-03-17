@@ -22,19 +22,26 @@
                                 <img class="mt-3 rounded-xl" src="https://source.unsplash.com/random/200x200/?doctor&procedimiento={{ $procedimiento->id }}" alt="Foto" />
                             </figure>
                             <div class="card-body">
+                                @if($procedimiento->activo)
+                                    <span class="badge badge-success">Activo</span>
+                                @else
+                                    <span class="badge badge-warning">Inactivo</span>
+                                @endif
                               <h2 class="card-title">{{ $procedimiento->nombre }}</h2>
-                              <p>{{ $procedimiento->descripcion }}</p>
+                              <p>{{ Str::limit($procedimiento->descripcion,50)  }}</p>
                               <div class="card-actions justify-end">
                                 <a href="{{ route('procedimientos.edit', $procedimiento) }}" class="btn btn-xs btn-outline btn-primary">
                                   Editar
                                 </a>
-                                <form action="{{ route('procedimientos.destroy', $procedimiento) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button type="submit" class="btn btn-xs btn-outline btn-error">
-                                    Eliminar
-                                  </button>
-                                </form>
+                                @if($procedimiento->agendas->count()==0)
+                                    <form action="{{ route('procedimientos.destroy', $procedimiento) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-xs btn-outline btn-error">
+                                        Eliminar
+                                    </button>
+                                    </form>
+                                @endif
                               </div>
                             </div>
                           </div>

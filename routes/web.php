@@ -18,10 +18,54 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Ruta home
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+//Ruta ver procedimiento
+Route::get('ver_procedimiento/{id}', function ($id) {
+    //obtener el procedimiento
+    $procedimiento = App\Models\Procedimiento::find($id);
+    return view('ver_procedimiento', compact('procedimiento'));
+})->name('ver_procedimiento');
+
+//Ruta para revista (cacncer de mama)
+Route::get('/revista/cancer_mama', function(){
+    return view('revista.cancer_mama');
+})->name('cancer_mama');
+
+//Ruta para revista (braquioplastia)
+Route::get('/revista/braquioplastia', function(){
+    return view('revista.braquioplastia');
+})->name('braquioplastia');
+
+//Ruta para revista (ginecomastia)
+Route::get('/revista/ginecomastia', function(){
+    return view('revista.ginecomastia');
+})->name('ginecomastia');
+
+//Ruta para revista (cirugía reconstructiva en mexico)
+Route::get('/revista/cirugia', function(){
+    return view('revista.cirugia');
+})->name('cirugia');
+
+//Ruta para revista (cirugía plastica)
+Route::get('/revista/cirugia_plastica', function(){
+    return view('revista.cirugia_plastica');
+})->name('cirugia_plastica');
+
+//Ruta para horarios
+Route::get('/revista/horarios', function(){
+    return view('revista.horarios');
+})->name('horarios');
+
+//Ruta para contacto
+Route::get('/revista/contacto', function(){
+    return view('revista.contacto');
+})->name('contacto');
+
+
 
 //Ruta dashboard
 Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth'])->name('dashboard');
@@ -45,6 +89,23 @@ Route::resource('/citas', CitaController::class)->middleware(['auth']);
 Route::get('/citas_buscar', [CitaController::class, 'buscar'])->name('citas.buscar')->middleware(['auth']);
 //Ver Citas disponibles
 Route::post('/citas_disponibles', [CitaController::class, 'disponibles'])->name('citas.disponibles')->middleware(['auth']);
+
+//Cancelar citas
+Route::put('/citas/{cita}/cancelar', [CitaController::class, 'cancelar'])->name('citas.cancelar')->middleware(['auth']);
+
+//Agenda del día para médico
+Route::get('/citas_agenda', [CitaController::class, 'agenda'])->name('citas.agenda_dia')->middleware(['auth', 'rol:medico']); 
+
+//Historial citas
+Route::get('/citas_historial', [CitaController::class, 'historial'])->name('citas.historial_medico')->middleware(['auth', 'rol:medico']); 
+
+//Atención citas
+Route::get('/citas_atender/{cita}', [CitaController::class, 'atender'])->name('citas.atender')->middleware(['auth', 'rol:medico']); 
+
+Route::put('/citas_atender/{cita}', [CitaController::class, 'registra'])->name('citas.registra')->middleware(['auth', 'rol:medico']); 
+
+Route::get('/citas/{cita}/detalle', [CitaController::class, 'detalle'])->name('citas.detalle')->middleware(['auth', 'rol:medico']); 
+
 
 
 Route::middleware('auth')->group(function () {

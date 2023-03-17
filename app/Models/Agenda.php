@@ -25,9 +25,9 @@ class Agenda extends Model
     {
         return $this->belongsTo(Procedimiento::class);
     }
-    public function citas()
+    public function cita()
     {
-        return $this->hasMany(Cita::class);
+        return $this->hasOne(Cita::class);
     }
 
     //getter estado
@@ -48,7 +48,7 @@ class Agenda extends Model
         if ($tipo == 1) {
             return 'Consulta';
         } else {
-            return 'Procemiento';
+            return 'Procedimiento';
         }
     }
     

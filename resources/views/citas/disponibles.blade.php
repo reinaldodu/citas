@@ -27,7 +27,7 @@
                                             <form method="POST" action="{{ route('citas.store') }}">
                                                 @csrf
                                                 <input type="hidden" name="agenda_id" value="{{ $cita->id }}">
-                                                <button type="submit" class="btn btn-primary">Agendar</button>
+                                                <button type="submit" class="btn btn-primary" onclick="this.disabled=true;  this.innerHTML='Agendando...'; this.form.submit();" >Agendar</button>
                                             </form>
                                         </div>
                                         </div>

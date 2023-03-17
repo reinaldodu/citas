@@ -11,6 +11,7 @@ class Procedimiento extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'activo',
     ];
 
     // Un procedimiento tiene muchos pacientes
@@ -19,4 +20,8 @@ class Procedimiento extends Model
         return $this->belongsToMany(User::class);
     }
     
+    public function agendas()
+    {
+        return $this->hasMany(Agenda::class);
+    }
 }

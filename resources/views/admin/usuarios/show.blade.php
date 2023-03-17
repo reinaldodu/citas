@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                  <div>
+                  <div class="flex justify-center">
                     <div class="card w-96 bg-base-100 shadow-xl">
                         <figure class="px-10 pt-10">
                           <img src="https://source.unsplash.com/random/200x200/?face" alt="foto" class="rounded-full" />
@@ -17,20 +17,21 @@
                         <div class="card-body">
                           <h2 class="card-title">{{ $user->nombres . ' ' . $user->apellidos }}</h2>
                           <div class="divider"></div> 
+                          <span class="badge badge-success">Rol: {{$user->rol->nombre}}</span>
                           <p> <span class="font-semibold">Documento:</span> {{ $user->documento }}</p>
                           <p> <span class="font-semibold">Fecha nacimiento:</span> {{ $user->fecha_nacimiento }}</p>
                           <p> <span class="font-semibold">Teléfono:</span> {{ $user->telefono }}</p>
                           <p> <span class="font-semibold">Email:</span> {{ $user->email }}</p>
                           <p> <span class="font-semibold">Estado:</span> 
                               @if ($user->estado == 1)
-                                  <span class="badge badge-success">Activo</span>
+                                  <span class="badge badge-warning">Activo</span>
                               @else
                                   <span class="badge badge-error">Inactivo</span>
                               @endif
                           </p>
                           <div class="card-actions justify-end mt-10">
                             <label for="my-modal" class="btn btn-xs btn-primary">Cambiar contraseña</label>
-                            <a href="{{ route('usuarios.index') }}" class="btn btn-xs btn-outline btn-primary">
+                            <a href="{{ route('usuarios.index') }}" class="btn btn-xs btn-primary">
                               Cerrar
                           </a>
                           </div>

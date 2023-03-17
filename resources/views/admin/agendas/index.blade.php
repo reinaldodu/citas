@@ -60,6 +60,7 @@
                                     </div>
 
                                     {{-- boton para eliminar agenda --}}
+                                    @if($agenda->cita==null)
                                     <div class="tooltip tooltip-left" data-tip="Eliminar">
                                         <form action="{{ route('agendas.destroy', $agenda) }}" method="POST">
                                             @csrf
@@ -71,6 +72,7 @@
                                             </button>
                                         </form>
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

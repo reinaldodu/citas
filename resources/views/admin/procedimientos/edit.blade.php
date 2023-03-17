@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class=" flex w-96 p-5 shadow-xl items-center">
+                    <div class=" flex w-full p-5 shadow-xl items-center">
                     <form method="POST" action="{{ route('procedimientos.update', $procedimiento) }}">
                         @csrf
                         @method('PUT')
@@ -23,9 +23,18 @@
                         <!-- Descripción -->
                         <div>
                             <x-input-label for="descripcion" :value="__('Descripcion')" />
-                            <x-text-input id="descripcion" class="input block mt-1 w-full" type="text" name="descripcion" :value="old('descripcion', $procedimiento->descripcion)" />
+                            <textarea id="descripcion" cols="120" rows="10" class="textarea textarea-bordered mt-1 w-full"  type="text" name="descripcion" required>{{$procedimiento->descripcion}}</textarea>                            
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
                         </div>
+
+                        <!-- Activo/Inactivo -->
+                        
+                        <div class="flex justify-end items-center mt-5 mb-5">
+                            <span>Inactivo</span>
+                            <input type="checkbox" name="activo" class="toggle ml-2 mr-2"  {{$procedimiento->activo ? 'checked': ''}} />
+                            <span>Activo </span>
+                        </div>
+
 
                         <div class="flex items-center justify-end mt-4">
                             <button type="submit" class="btn btn-primary">

@@ -14,7 +14,7 @@
                         <div class="divider"></div>
                     </div>
 
-                    {{-- Dashboar para el Administrador --}}
+                    {{-- Dashboard para el Administrador --}}
                     @if (Auth::user()->rol_id == 1)
                         <div class="flex flex-col">
                         {{-- Estadisticas generales --}}

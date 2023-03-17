@@ -30,4 +30,21 @@ class Cita extends Model
     {
         return $this->belongsToMany(Procedimiento::class);
     }
+
+    //getter estado de la cita
+    public function getEstadoAttribute($estado)
+    {
+        if($estado==1)
+        {
+            return 'Pendiente';
+        }
+        elseif($estado==2)
+        {
+            return 'Atendida';
+        }
+        else
+        {
+            return 'Cancelada';
+        }
+    }
 }

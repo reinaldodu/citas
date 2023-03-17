@@ -15,11 +15,27 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //Listar todos los usuarios excepto el id 1 (Superadministrador)
-        $usuarios=User::where('id', '!=', 1)->paginate(10);
-        return view('admin.usuarios.index', compact('usuarios'));
+        if($request->nombre || $request->rol)
+        {
+            if($request->nombre)
+            {
+                $usuarios=User::where('name', 'like', '%'.$request->nombre.'%')->where('id', '!=', 1)->paginate(10)->withQueryString();
+                return view('admin.usuarios.index', compact('usuarios'));
+            }
+            if($request->rol)
+            {
+                $usuarios=User::where('rol_id', $request->rol)->where('id', '!=', 1)->paginate(10)->withQueryString();
+                return view('admin.usuarios.index', compact('usuarios'));
+            }
+        }
+        else
+        {
+                //Listar todos los usuarios excepto el id 1 (Superadministrador)
+                $usuarios=User::where('id', '!=', 1)->paginate(10);
+                return view('admin.usuarios.index', compact('usuarios'));
+        }
     }
 
     /**
