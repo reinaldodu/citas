@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Procedimiento;
 use Illuminate\Http\Request;
+use App\Models\Cita;
 
 class ProcedimientoController extends Controller
 {

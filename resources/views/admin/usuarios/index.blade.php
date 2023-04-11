@@ -21,12 +21,12 @@
 
 
                     {{-- Botón crear un nuevo usuario --}}
-                    <div class="flex justify-end mb-6 mt-5">
-                        <a href="{{ route('usuarios.create') }}" class="btn btn-success">Crear Usuario</a>
+                    <div class="flex justify-end mb-6">
+                        <a href="{{ route('usuarios.create') }}" class="btn btn-sm btn-outline btn-primary ring-2 rounded-full">Crear Usuario</a>
                     </div>
                     
                     <!--Filtros-->
-                    <div class="flex justify-between mb-10">
+                    <div class="flex justify-between mb-5">
                         <!--Filtrar por nombre-->
                         <div class="flex justify-start">
                            <form action="{{route('usuarios.index')}}" method="GET">
@@ -38,7 +38,7 @@
                         </div>
                         <!--Filtrar por rol-->
 
-                        <div class="flex justify-end space-x-4">
+                        <div class="flex flex-col justify-end gap-2 md:flex-row">
                             <p>Filtros:</p>
                             <a href="{{route('usuarios.index')}}" class="btn btn-outline btn-xs btn-success rounded-xl">Todos</a>
                             <a href="{{route('usuarios.index',['rol'=>1])}}" class="btn btn-outline btn-xs btn-success rounded-xl">Administradores</a>

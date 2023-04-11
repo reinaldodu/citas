@@ -12,12 +12,12 @@
                     
                     {{-- Botón crear procedimiento --}}
                     <div class="flex justify-end mb-5">
-                        <a href="{{ route('procedimientos.create') }}" class="btn btn-outline btn-primary rounded-full">Crear Procedimiento</a>
+                        <a href="{{ route('procedimientos.create') }}" class="btn btn-sm btn-outline btn-primary ring-2 rounded-full">Crear Procedimiento</a>
                     </div>
 
-                        <div class="grid grid-cols-4 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                         @foreach($procedimientos as $procedimiento)
-                        <div class="card w-56 bg-base-100 shadow-xl mt-5 border">
+                        <div class="card w-full bg-base-100 shadow-xl mt-5 border">
                             <figure>
                                 <img class="mt-3 rounded-xl" src="https://source.unsplash.com/random/200x200/?doctor&procedimiento={{ $procedimiento->id }}" alt="Foto" />
                             </figure>

@@ -6,6 +6,13 @@
     </x-slot>
                         
     <div class="py-12">
+
+        @if (session('error'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="flex p-6 text-gray-900 dark:text-gray-100 justify-center">

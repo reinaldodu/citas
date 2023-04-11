@@ -18,6 +18,12 @@ class CitaController extends Controller
      */
     public function index()
     {
+        //si se le envia el query string atendidas, se muestran las citas atendidas
+        if(request()->query('atendidas') == 'si') {
+            $citas = Cita::where('paciente_id', Auth()->user()->id)->where('estado', 2)->get();
+            return view('citas.index', compact('citas'));
+        } el
+        
         //Mostrar citas del paciente
         $citas = Cita::where('paciente_id', Auth()->user()->id)->get();
         return view('citas.index', compact('citas'));
@@ -140,6 +146,8 @@ class CitaController extends Controller
     public function cancelar(Cita $cita)
     {
         $cita->estado = 3;
+        //Actualizamos la fecha update_at a la fecha actual
+        $cita->touch();
         $cita->save();
         $agenda = Agenda::find($cita->agenda_id);
         $agenda->estado = 1;
@@ -193,6 +201,22 @@ class CitaController extends Controller
     {
         return view('citas.detalle', compact('cita'));
 
+    }
+
+    // Buscar citas por procedimiento
+    public function cita_procedimiento_buscar($procedimiento)
+    {
+        $citas=Cita::where('estado',1)
+                    ->whereHas('agenda',function($query) use ($procedimiento){
+                      $query->where('procedimiento_id',$procedimiento);
+                    })->get();
+        return view('citas.medico.create', compact('citas'));
+    }
+
+    public function cita_medico_crear()
+    {
+        $procedimientos = Procedimiento::all();
+        return view('citas.medico.create', compact('procedimientos'));
     }
 
 }

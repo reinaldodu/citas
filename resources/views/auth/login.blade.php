@@ -38,6 +38,13 @@
                 <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
         </div>
+        
+        {{-- Mostrar Recaptcha V2 --}}
+        <div>
+            {!! NoCaptcha::renderJs() !!}
+            {!! NoCaptcha::display() !!}
+            <x-input-error :messages="$errors->get('g-recaptcha-response')" class="badge badge-warning mt-2" />
+        </div>
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))

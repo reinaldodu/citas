@@ -15,57 +15,8 @@
     </head>    
     <body>
         <header>
-            <div class="navbar bg-green-100">
-                <div class="navbar-start">
-                    <a href="/" class="navbar-brand">
-                        <img class="h-12 ml-5 rounded-full" src="{{ asset('storage/images/logo.jpg') }}" alt="Logo">
-                    </a>
-                </div>
-          
-                <div class="navbar-center hidden lg:flex">
-                  <ul class="menu menu-compact menu-horizontal px-1">                
-                    <li tabindex="0">
-                      <a>
-                        Procedimientos
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
-                      </a>
-                      @include ('partials.lista_procedimientos')
-                      
-                    </li>
-                    <li tabindex="0"><a>Revista
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
-                    </a>
-                        <ul class="bg-base-100 z-10  bg-orange-400 text-white">
-                            <li><a href="{{route('braquioplastia')}}">Braquioplastía</a></li>
-                            <li><a href="{{route('cancer_mama')}}">Cáncer de mama</a></li>
-                            <li><a href="{{route('cirugia_plastica')}}">Cirugía Plástica</a></li>
-                            <li><a href="{{route('cirugia')}}">Cirugía Reconstructiva en México</a></li>
-                            <li><a href="{{route('ginecomastia')}}">Ginecomastía</a></li>
-
-                        </ul>
-                    </li>
-
-                    <li><a href="{{route('dashboard')}}">Agendar</a></li>
-                    <li><a href="{{route('horarios')}}">Horarios de atención</a></li>
-                    <li><a href="{{route('contacto')}}">Contacto</a></li>
-                  </ul>
-                </div>
-                <div class="navbar-end">
-                    @if (Route::has('login'))
-                        <div>
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="btn btn-sm normal-case">Dashboard</a>
-                            @else
-                                <a href="{{ route('login') }}" class="btn btn-sm mr-5 normal-case">Iniciar sesión</a>
-    
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="btn btn-sm normal-case">Registrarse</a>
-                                @endif
-                            @endauth
-                        </div>
-                    @endif
-                </div>
-              </div>
+            {{-- Menú de navegación --}}
+            @include ('layouts.navigation2')
         </header>
 
         <section id="carrusel">

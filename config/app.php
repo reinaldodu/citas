@@ -69,7 +69,10 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    //zona horaria mexico
+    'timezone' => 'America/Mexico_City',
+    //'timezone' => 'UTC',
+
 
     /*
     |--------------------------------------------------------------------------

@@ -35,12 +35,15 @@ class RegisteredUserController extends Controller
             //'name' => ['required', 'string', 'max:255'],
             'nombres' => ['required', 'string', 'max:255'],
             'apellidos' => ['required', 'string', 'max:255'],
+            //el documento es unico en la tabla users
+            'documento' => ['required', 'string', 'max:30', 'unique:'.User::class],
             'documento' => ['required', 'string', 'max:30'],
             'fecha_nacimiento' => ['required', 'date'],
             'telefono' => ['required', 'string', 'max:30'],
             'direccion' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $user = User::create([

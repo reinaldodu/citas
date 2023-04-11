@@ -12,7 +12,7 @@
                     
                     {{-- Botón crear agenda --}}
                     <div class="flex justify-end mb-5">
-                        <a href="{{ route('agendas.create') }}" class="btn btn-outline btn-primary rounded-full">Crear Agenda</a>
+                        <a href="{{ route('agendas.create') }}" class="btn btn-sm btn-outline btn-primary ring-2 rounded-full">Crear Agenda</a>
                     </div>
 
                     <div class="overflow-x-auto">

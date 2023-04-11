@@ -11,6 +11,12 @@
                 <div class="p-6  dark:text-gray-100">
                     <div class="text-gray-700 text-xl font-semibold mb-10">
                         {{ __("Bienvenido/a ") . Auth::user()->name }}
+                        {{-- Nombre del rol --}}
+                        <span class="badge">
+                            {{ Auth::user()->rol->nombre }}
+                        </span>
+
+
                         <div class="divider"></div>
                     </div>
 

@@ -50,6 +50,17 @@ class AgendaController extends Controller
             'medico' => 'required',
             'procedimiento' => 'required',
         ]);
+
+        //validar que el medico no tenga una agenda en la misma fecha y hora
+        $agenda = Agenda::where('medico_id', $request->medico)
+            ->where('fecha', $request->fecha)
+            ->where('hora', '>=', $request->hora_inicial)
+            ->where('hora', '<=', $request->hora_final)
+            ->first();
+        if ($agenda) {
+            return redirect()->back()->with('error', 'El médico ya tiene una agenda en la fecha y hora seleccionada');
+        }
+        
         //Mensajes de errores personalizados
         $messages = [
             'hora_final.after' => 'La hora final debe ser mayor a la hora inicial',

@@ -8,25 +8,18 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-
+                <div class="flex justify-center p-6 text-gray-900 dark:text-gray-100">
+                <div class="w-96 shadow-xl rounded-lg p-5">
                     <form method="POST" action="{{ route('usuarios.store') }}">
                         @csrf
-
-                        <!-- Name -->
-                        {{-- <div>
-                            <x-input-label for="name" :value="__('Name')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                        </div> --}}
 
                         <!-- Roles -->
                         <div>
                             <x-input-label for="rol_id" :value="__('Tipo de usuario')" />
-                            <select name="rol_id" id="rol_id">
+                            <select class="select select-bordered" name="rol_id" id="rol_id">
                                 @foreach ($roles as $rol)
-                                    {{-- Rol paciente(#2) por defecto --}}
-                                    @if ($rol->id == 2) 
+                                    {{-- Rol paciente(#3) por defecto --}}
+                                    @if ($rol->id == 3) 
                                         <option value="{{ $rol->id }}" selected>{{ $rol->nombre }}</option>
                                     @else
                                         <option value="{{ $rol->id }}">{{ $rol->nombre }}</option>
@@ -117,6 +110,7 @@
                             </a>
                         </div>
                     </form>
+                </div>
                 </div>
             </div>
         </div>
