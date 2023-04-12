@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form id="form-register" method="POST" action="{{ route('register') }}">
         @csrf
 
         <!-- Name -->
@@ -39,14 +39,14 @@
 
         <!-- Telefono -->
         <div>
-            <x-input-label for="telefono" :value="__('Telefono')" />
+            <x-input-label for="telefono" :value="__('Teléfono')" />
             <x-text-input id="telefono" class="input block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required />
             <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
         </div>
 
         <!-- Direccion -->
         <div>
-            <x-input-label for="direccion" :value="__('Direccion')" />
+            <x-input-label for="direccion" :value="__('Dirección')" />
             <x-text-input id="direccion" class="input block mt-1 w-full" type="text" name="direccion" :value="old('direccion')" required />
             <x-input-error :messages="$errors->get('direccion')" class="mt-2" />
         </div>
@@ -60,7 +60,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Contraseña')" />
 
             <x-text-input id="password" class="input block mt-1 w-full"
                             type="password"
@@ -72,7 +72,7 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirme contraseña')" />
 
             <x-text-input id="password_confirmation" class="input block mt-1 w-full"
                             type="password"
@@ -81,21 +81,39 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        {{-- Mostrar Recaptcha V2 --}}
-        <div>
-            {!! NoCaptcha::renderJs() !!}
-            {!! NoCaptcha::display() !!}
-            <x-input-error :messages="$errors->get('g-recaptcha-response')" class="badge badge-warning mt-2" />
+        <div class="mt-2">
+        
+        <!--Recaptcha v2-->
+        {!! NoCaptcha::renderJs() !!}
+        {!! NoCaptcha::display() !!}
+        <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2" />
         </div>
+        
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+                {{ __('¿Ya estás registrado?') }}
             </a>
 
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
+          <x-primary-button class="ml-4">
+                {{ __('Registrarse') }}
+              </x-primary-button>
+
+            <!--CAPTCHA-->
+           <!--<button class="g-recaptcha" 
+                data-sitekey="reCAPTCHA_site_key" 
+                data-callback='onSubmit' 
+                data-action='submit'>Registrarse
+            </button>
         </div>
     </form>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+    <script>
+        function onSubmit(token) {
+            document.getElementById("form-register").submit();
+        }
+
+    </script>-->
 </x-guest-layout>
+<br><br>

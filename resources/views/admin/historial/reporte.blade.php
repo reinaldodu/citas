@@ -17,11 +17,9 @@
                         </div>
                     </div>
                     @endif
-                    //boton para volver Atras a la vista de historial.index al lado derecho
-                    <div class="flex justify-end mb-6 mt-5">
-                        <a href="{{ route('historial.index') }}" class="btn btn-success">Volver</a>
-                    
-                    
+                    <div class="flex justify-end mb-5">
+                    <a href="{{ route('historial.index') }}" class="btn btn-sm btn-outline btn-primary ring-2 rounded-full">Regresar</a>
+                    </div>
                     <div class="overflow-x-auto">
                         <table class="table table-zebra w-full">
                           <!-- head -->
@@ -53,17 +51,13 @@
                                 </td>
                                 <td>
                                     {{ $cita->agenda->procedimiento->nombre }}
-                                </td>
-                        
-                                
+                                </td>                      
                                 <td>
 
 
                                     {{-- boton detalle cita --}}
-                                    @if($cita->estado=='Atendida')
-                                       
-                                        <a href="{{ route('citas.show', $cita) }}" class="btn btn-xs btn-success">Ver detalles</a>
-                                       
+                                    @if($cita->estado=='Atendida')                           
+                                        <a href="{{ route('citas.show', $cita) }}" class="btn btn-xs btn-success">Ver detalles</a>                     
                                     @endif
 
                                 </td>
@@ -75,6 +69,7 @@
                     <div class="mt-4">
                         {{ $citas->links() }}
                     </div>
+                    
                 </div>
             </div>
         </div>

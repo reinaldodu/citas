@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Historial de citas') }}
+            {{ __('Lista de procedimientos') }}
         </h2>
     </x-slot>
 
@@ -9,6 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+
                     @if(session("info"))
                     <div class="alert alert-success shadow-lg">
                         <div>
@@ -17,6 +18,12 @@
                         </div>
                     </div>
                     @endif
+
+                    {{-- Botón crear un nuevo usuario --}}
+                    <div class="flex justify-end mb-6 mt-5">
+                        <a href="{{ route('cita.procedimiento.crear') }}"class="btn btn-sm btn-outline btn-primary ring-2 rounded-full">Crear cita procedimiento</a>
+                    </div>
+
                     <div class="overflow-x-auto">
                         <table class="table table-zebra w-full">
                           <!-- head -->
@@ -24,9 +31,8 @@
                             <tr>
                               <th>Fecha</th>
                               <th>Hora</th>
-                              <th>Médico</th>
+                              <th>Paciente</th>
                               <th>Procedimiento</th>
-                              <th>Estado</th>
                               <th></th>
                             </tr>
                           </thead>
@@ -41,32 +47,20 @@
                                     {{ $cita->agenda->hora }}
                                 </td>
                                 <td>
-                                    {{ $cita->agenda->medico->nombres . ' ' . $cita->agenda->medico->apellidos }}
+                                    {{ $cita->paciente->nombres . ' ' . $cita->paciente->apellidos }}
                                 </td>
                                 <td>
                                     {{ $cita->agenda->procedimiento->nombre }}
                                 </td>
-                                <td>
-                                    {{ $cita->estado }}
-                                </td>
                                 
                                 <td>
 
-                                    {{-- boton para cancelar agenda --}}
-                                    @if($cita->estado=='Pendiente')
-                                        <form action="{{ route('citas.cancelar', $cita) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="btn btn-xs btn-primary" onclick="return confirm('¿Estás seguro de cancelar la cita?')">Cancelar cita</button>
-                                        </form>
-                                    @endif
+                                    {{-- boton para ver detalle de la cita --}}
+                                <a class="btn btn-xs btn-color" href="{{route('citas.detalle', $cita->id)}}">Consultar receta</a>
 
+                                    
                                     {{-- boton detalle cita --}}
-                                    @if($cita->estado=='Atendida')
-                                       
-                                        <a href="{{ route('citas.show', $cita) }}" class="btn btn-xs btn-success">consultar receta</a>
-                                       
-                                    @endif
+                                   
 
                                 </td>
                             </tr>
@@ -79,4 +73,10 @@
             </div>
         </div>
     </div>
+    <style>
+        .btn-color{
+            background-color:#049248;
+            color:white;
+        }
+    </style>
 </x-app-layout>

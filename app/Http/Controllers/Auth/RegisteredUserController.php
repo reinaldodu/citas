@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistroMail;
 
 class RegisteredUserController extends Controller
 {
@@ -35,9 +37,7 @@ class RegisteredUserController extends Controller
             //'name' => ['required', 'string', 'max:255'],
             'nombres' => ['required', 'string', 'max:255'],
             'apellidos' => ['required', 'string', 'max:255'],
-            //el documento es unico en la tabla users
             'documento' => ['required', 'string', 'max:30', 'unique:'.User::class],
-            'documento' => ['required', 'string', 'max:30'],
             'fecha_nacimiento' => ['required', 'date'],
             'telefono' => ['required', 'string', 'max:30'],
             'direccion' => ['required', 'string', 'max:255'],
@@ -59,10 +59,17 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        
+        Auth::login($user);
 
+         //Se envía el email de registro 
+         $registroData=[
+            "nombre"=>Auth()->user()->name,
+          
+        ];
+        Mail::to(Auth()->user()->email)->send(new RegistroMail($registroData));
         event(new Registered($user));
 
-        Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }

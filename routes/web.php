@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\ProcedimientoMedicoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +69,16 @@ Route::get('/revista/contacto', function(){
     return view('revista.contacto');
 })->name('contacto');
 
+//Ruta para Acerca de nosotros
+Route::get('/revista/acercade', function(){
+    return view('revista.acercade');
+})->name('acercade');
+
+//Ruta para nuestros servicios
+Route::get('/revista/servicios', function(){
+    return view('revista.servicios');
+})->name('servicios');
+
 
 
 //Ruta dashboard
@@ -85,23 +97,6 @@ Route::put('/usuarios/{user}/estado', [UserController::class, 'estado'])->name('
 //Ruta agendas
 Route::resource('/agendas', AgendaController::class)->middleware(['auth', 'rol:admin']);
 
-//Ruta historial
-Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index')->middleware(['auth', 'rol:admin']);
-Route::get('/historial/reporte/{tipo}', [HistorialController::class, 'reporte'])->name('historial.reporte')->middleware(['auth', 'rol:admin']);
-
-///*****BACKUPS**********/
-// Ruta para crear backup (se usa el paquete spatie/laravel-backup)
-Route::get('/crear_backup', [BackupController::class, 'crear_backup'])->name('crear_backup')->middleware(['auth', 'rol:admin']);
-
-// Listar los archivos backup
-Route::get('/listar_backups', [BackupController::class, 'listar_backups'])->name('listar_backups')->middleware(['auth', 'rol:admin']);
-    
-// Descargar un archivo de backup
-Route::get('/descargar_backup/{archivo}', [BackupController::class, 'descargar_backup'])->name('descargar_backup')->middleware(['auth', 'rol:admin']);
-
-// Eliminar un archivo del backup
-Route::get('/eliminar_backup/{archivo}', [BackupController::class, 'eliminar_backup'])->name('eliminar_backup')->middleware(['auth', 'rol:admin']);
-
 //Rutas citas
 Route::resource('/citas', CitaController::class)->middleware(['auth']);
 //Buscar citas
@@ -115,6 +110,21 @@ Route::put('/citas/{cita}/cancelar', [CitaController::class, 'cancelar'])->name(
 //Agenda del día para médico
 Route::get('/citas_agenda', [CitaController::class, 'agenda'])->name('citas.agenda_dia')->middleware(['auth', 'rol:medico']); 
 
+// Route::get('/procedimiento_medico_crear', [CitaController::class, 'procedimiento_medico_crear'])->name('procedimiento.medico.crear')->middleware(['auth', 'rol:medico']); 
+// Route::post('/procedimiento_medico_crear', [CitaController::class, 'procedimiento_medico_store'])->name('procedimiento.medico.store')->middleware(['auth', 'rol:medico']); 
+
+//Ruta para que el medico pueda solicitar una cita para el paciente de acuerdo al nombre del paciente y la fecha
+Route::get('/cita_procedimiento_crear', [CitaController::class, 'cita_procedimiento_crear'])->name('cita.procedimiento.crear')->middleware(['auth', 'rol:medico']);
+//Ruta para guardar la cita solicitada
+Route::post('/cita_procedimiento_crear', [CitaController::class, 'cita_procedimiento_guardar'])->name('cita.procedimiento.guardar')->middleware(['auth', 'rol:medico']);
+//Ruta de lista procedimientos programados por el medico
+Route::get('/procedimientos_programados', [CitaController::class, 'procedimientos_programados'])->name('procedimientos.programados')->middleware(['auth', 'rol:medico']);
+
+//Ruta para buscar agendas disponibles de acuerdo al nombre del procedimiento
+Route::get('/agendas_disponibles/{procedimiento}', [AgendaController::class, 'agendas_disponibles'])->name('agendas.disponibles')->middleware(['auth', 'rol:medico']);
+//Ruta para buscar pacientes
+Route::get('/buscar_paciente/{paciente}', [UserController::class, 'buscar_paciente'])->name('buscar.paciente')->middleware(['auth', 'rol:medico']);
+
 //Historial citas
 Route::get('/citas_historial', [CitaController::class, 'historial'])->name('citas.historial_medico')->middleware(['auth', 'rol:medico']); 
 
@@ -123,17 +133,29 @@ Route::get('/citas_atender/{cita}', [CitaController::class, 'atender'])->name('c
 
 Route::put('/citas_atender/{cita}', [CitaController::class, 'registra'])->name('citas.registra')->middleware(['auth', 'rol:medico']); 
 
+
 Route::get('/citas/{cita}/detalle', [CitaController::class, 'detalle'])->name('citas.detalle')->middleware(['auth', 'rol:medico']); 
 
-//Ruta para buscar un paciente por nombre
-Route::get('/cita_paciente_buscar', [CitaController::class, 'cita_paciente_buscar'])->name('cita.paciente.buscar')->middleware(['auth', 'rol:medico']);
-//Ruta para buscar las citas disponibles para un procedimiento
-Route::get('/cita_procedimiento_buscar', [CitaController::class, 'cita_procedimiento_buscar'])->name('cita.procedimiento.buscar')->middleware(['auth', 'rol:medico']);
+//Historiales (administrador)(agendadas,atendidas,canceladas,procedimientos)
+Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index')->middleware(['auth', 'rol:admin']); 
 
-//Ruta para que el medico pueda solicitar una cita para el paciente de acuerdo al nombre del paciente y la fecha
-Route::get('/cita_medico_crear', [CitaController::class, 'cita_medico_crear'])->name('cita.medico.crear')->middleware(['auth', 'rol:medico']);
-//Ruta para guardar la cita solicitada
-Route::post('/cita_medico_crear', [CitaController::class, 'cita_medico_guardar'])->name('cita.medico.guardar')->middleware(['auth', 'rol:medico']);
+Route::get('/historial/reporte/{tipo}', [HistorialController::class, 'reporte'])->name('historial.reporte')->middleware(['auth', 'rol:admin']); 
+
+//Ruta para crear los backups
+Route::get('/crear_backup',[BackupController::class, 'crear_backup'])->name('crear_backup')->middleware(['auth', 'rol:admin']);
+
+//Ruta listar backup
+Route::get('/listar_backup',[BackupController::class, 'listar_backup'])->name('listar_backup')->middleware(['auth', 'rol:admin']);
+
+//Ruta descargar backup
+Route::get('/descargar_backup/{archivo}',[BackupController::class, 'descargar_backup'])->name('descargar_backup')->middleware(['auth', 'rol:admin']);
+
+//Ruta eliminar backup
+Route::get('/eliminar_backup/{archivo}',[BackupController::class, 'eliminar_backup'])->name('eliminar_backup')->middleware(['auth', 'rol:admin']);
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

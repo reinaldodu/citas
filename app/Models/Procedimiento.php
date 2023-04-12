@@ -11,6 +11,7 @@ class Procedimiento extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'preguntas',
         'activo',
     ];
 

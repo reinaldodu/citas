@@ -11,12 +11,9 @@
                 <div class="p-6  dark:text-gray-100">
                     <div class="text-gray-700 text-xl font-semibold mb-10">
                         {{ __("Bienvenido/a ") . Auth::user()->name }}
-                        {{-- Nombre del rol --}}
                         <span class="badge">
                             {{ Auth::user()->rol->nombre }}
                         </span>
-
-
                         <div class="divider"></div>
                     </div>
 
@@ -33,10 +30,10 @@
                                 </a>
                             </div>
                               <div class="stat-title text-gray-900 font-semibold">Total Usuarios</div>
-                              <div class="stat-value text-primary">{{ $total_usuarios }}</div>
-                              <div class="stat-desc">Administradores {{ $total_administradores }}</div>
-                              <div class="stat-desc">Médicos {{ $total_medicos }}</div>
-                              <div class="stat-desc">Pacientes {{ $total_pacientes }}</div>
+                              <div class="stat-value text-primary">{{$dashboard_admin['total_usuarios'] }}</div>
+                              <div class="stat-desc">Administradores {{$dashboard_admin['total_administradores'] }}</div>
+                              <div class="stat-desc">Médicos {{$dashboard_admin['total_medicos'] }}</div>
+                              <div class="stat-desc">Pacientes {{$dashboard_admin['total_pacientes'] }}</div>
                             </div>
                             
                             <div class="stat">
@@ -47,7 +44,7 @@
                                     </a>
                                 </div>
                               <div class="stat-title text-gray-900 font-semibold">Procedimientos</div>
-                              <div class="stat-value text-secondary">{{ $total_procedimientos }}</div>
+                              <div class="stat-value text-secondary">{{$dashboard_admin['total_procedimientos'] }}</div>
                               <div class="stat-desc">Procedimientos disponibles</div>
                             </div>
                             
@@ -98,8 +95,108 @@
                         </div>
                     @endif
 
+
+                    @if (Auth::user()->rol_id == 2)
+                  <div class="flex justify-center">
+                  <div class="stats shadow ">
+                          <div class="stat" style="color:white; background-color:#040c1e;">
+                            <div class="stat-figure text-secondary">
+                                <!--<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>-->
+                                <a href="{{route('citas.agenda_dia')}}" class="btn btn-xs btn-success">Ver</a>
+
+                              </div>
+                               
+                                <div id="negro" class="stat-title">Citas del día</div>
+                              <div class="stat-value">{{$dashboard_medico['total_dia_medico']}}</div>
+                              <div id="negro" class="stat-desc">{{\Carbon\Carbon::now()->format('d-m-Y')}}</div>
+                            </div>
+
+                          <div class="stat" style="background-color:#28a8ea;">
+                              <div class="stat-figure text-secondary" >
+                              <!--<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>-->
+                              <a href="{{route('citas.historial_medico')}}" class="btn btn-xs btn-success">Ver</a>
+
+                          </div>
+                           
+                            <div style="font-weight:bold;" class="stat-title">Citas atendidas</div>
+                            <div class="stat-value">{{$dashboard_medico['total_atendidas_medico']}}</div>
+                        
+                          </div>
+                        
+                      
+                    </div>
+
+                    </div>
+
+                    @endif
+
+
+                   @if (Auth::user()->rol_id == 3)
+
+                   <div class="flex justify-center items-center">
+                  <div class="stats shadow ">
+                          <div class="stat" style="background-color:#3b5540;">
+                            <div class="stat-figure text-secondary">
+                                <!--<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>-->
+                                <a href="{{route('citas.index',['filtro'=>'pendiente'])}}" class="btn btn-xs btn-info">Ver</a>
+                            </div>
+                                <div id="blanco" class="stat-title">Citas pendientes</div>
+                                <div id="blanco"  class="stat-value">{{$dashboard_paciente['total_citas_pacientes']}}</div>
+                            </div>
+
+                          <div class="stat" style="background-color:#2ea082;">
+                              <div class="stat-figure text-secondary">
+                              <!--<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>-->
+                              <a href="{{route('citas.index',['filtro'=>'cancelada'])}}" class="btn btn-xs btn-info">Ver</a>
+  
+                          </div>
+                              <div id="blanco"  class="stat-title">Total citas canceladas</div>
+                              <div id="blanco"  class="stat-value">{{$dashboard_paciente['total_canceladas_pacientes']}}</div>
+                          </div>
+                          
+                          <div class="stat" style="background-color:#69c16f">
+                              <div class="stat-figure text-secondary">
+                              <a href="{{route('citas.index',['filtro'=>'atendida'])}}" class="btn btn-xs btn-info">Ver</a>
+
+
+                          </div>
+                              <div id="blanco"  class="stat-title">Consultar recetas</div>
+                              <div id="blanco"  class="stat-value">{{$dashboard_paciente['total_recetas_pacientes']}}</div>
+                          </div>
+                        
+                    </div>
+                    <a href="{{route('citas.buscar')}}" class="btn ml-6 btn-primary ">Agenda una nueva cita</a>
+                    </div>
+
+                    @endif
+
+                    
+                
+
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+      #negro{
+        color:white;
+        font-weight:bold;
+      }
+
+      .btn-color{
+        background-color:#d6ec8f;
+        color:black;
+      }
+
+      .btn-color:hover{
+        background-color:#2ea082;
+        color:white;
+      }
+
+      #blanco{
+        color:white;
+        font-weight:bold;
+      }
+    </style>
 </x-app-layout>

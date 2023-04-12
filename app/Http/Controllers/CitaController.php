@@ -8,6 +8,7 @@ use App\Models\Procedimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnvioMail;
+use App\Mail\CancelarMail;
 
 class CitaController extends Controller
 {
@@ -18,15 +19,25 @@ class CitaController extends Controller
      */
     public function index()
     {
-        //si se le envia el query string atendidas, se muestran las citas atendidas
-        if(request()->query('atendidas') == 'si') {
-            $citas = Cita::where('paciente_id', Auth()->user()->id)->where('estado', 2)->get();
-            return view('citas.index', compact('citas'));
-        } el
-        
-        //Mostrar citas del paciente
-        $citas = Cita::where('paciente_id', Auth()->user()->id)->get();
+        if(request()->query('filtro')=='atendida')
+        {
+          $citas = Cita::where('paciente_id', Auth()->user()->id)->where('estado',2)->get();
+        }
+        elseif(request()->query('filtro')=='pendiente')
+        {
+            $citas = Cita::where('paciente_id', Auth()->user()->id)->where('estado',1)->get();
+        }
+        elseif(request()->query('filtro')=='cancelada')
+        {
+            $citas = Cita::where('paciente_id', Auth()->user()->id)->where('estado',3)->get();
+
+        }
+        else{
+                //Mostrar citas del paciente
+            $citas = Cita::where('paciente_id', Auth()->user()->id)->get();
+        }
         return view('citas.index', compact('citas'));
+
     }
 
     /**
@@ -57,6 +68,7 @@ class CitaController extends Controller
         $agenda = Agenda::find($request->agenda_id);
         $agenda->estado = 2;
         $agenda->save();
+
         //Se envía el email de confirmación al paciente
         $mailData=[
             "nombre"=>Auth()->user()->name,
@@ -115,6 +127,7 @@ class CitaController extends Controller
         //
     }
 
+  
     //Mostrar formulario para buscar citas
     public function buscar()
     {
@@ -124,6 +137,7 @@ class CitaController extends Controller
        
     }
 
+   
     //Ver las citas disponibles
     public function disponibles(Request $request)
     {
@@ -152,6 +166,16 @@ class CitaController extends Controller
         $agenda = Agenda::find($cita->agenda_id);
         $agenda->estado = 1;
         $agenda->save();
+
+         //Se envía el email para cancelar la cita
+         $cancelarData=[
+            "nombre"=>Auth()->user()->name,
+            "fecha"=>$agenda->fecha,
+            "hora"=>$agenda->hora,
+            "procedimiento"=>$agenda->procedimiento->nombre,
+            "medico"=>$agenda->medico->name
+        ];
+        Mail::to(Auth()->user()->email)->send(new CancelarMail($cancelarData));
         return redirect()->route('citas.index')->with('info', 'La cita se canceló con éxito');
     }
 
@@ -203,20 +227,49 @@ class CitaController extends Controller
 
     }
 
-    // Buscar citas por procedimiento
-    public function cita_procedimiento_buscar($procedimiento)
-    {
-        $citas=Cita::where('estado',1)
-                    ->whereHas('agenda',function($query) use ($procedimiento){
-                      $query->where('procedimiento_id',$procedimiento);
-                    })->get();
-        return view('citas.medico.create', compact('citas'));
-    }
 
-    public function cita_medico_crear()
+    public function cita_procedimiento_crear()
     {
         $procedimientos = Procedimiento::all();
         return view('citas.medico.create', compact('procedimientos'));
     }
+
+    public function cita_procedimiento_guardar(Request $request)
+    {
+        //dd(request()->all());
+        Cita::create([
+            'paciente_id' => $request->paciente_id,
+            'agenda_id' => $request->fecha,
+            'estado' => 1,
+        ]);
+        //Actualizamos el estado de la agenda
+        $agenda = Agenda::find($request->fecha);
+        $agenda->estado = 2;
+        $agenda->save();
+        //Se envía el email de confirmación al paciente
+        
+        $mailData=[
+            "nombre"=>$agenda->cita->paciente->name,
+            "fecha"=>$agenda->fecha,
+            "hora"=>$agenda->hora,
+            "procedimiento"=>$agenda->procedimiento->nombre,
+            "medico"=>$agenda->medico->name
+        ];
+        Mail::to($agenda->cita->paciente->email)->send(new EnvioMail($mailData));
+        
+        return redirect()->route('procedimientos.programados')->with('info', 'La cita se creó con éxito');
+    }
+
+
+    public function procedimientos_programados()
+    {
+        $citas = Cita::whereHas('agenda', function ($query) {
+                $query->where('medico_id', Auth()->user()->id)
+                      ->where('tipo', 2);
+            })->get();
+        return view('citas.medico.index', compact('citas'));
+    }
+
+
 
 }

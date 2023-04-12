@@ -181,4 +181,11 @@ class UserController extends Controller
         ]);
         return redirect()->route('usuarios.index')->with('info', 'El estado se actualizó con éxito');
     }
+
+    public function buscar_paciente($nombre)
+    {
+        $pacientes=User::where('name', 'like', '%'.$nombre.'%')->where('rol_id', 3)->get();
+        return response()->json($pacientes);
+    }
+
 }

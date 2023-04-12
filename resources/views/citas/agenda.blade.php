@@ -40,9 +40,11 @@
                                     {{-- boton para atender agenda --}}
                                     @if($agenda->estado=='Ocupada')
                                         @if($agenda->cita->estado =='Pendiente')
-                                            <a class="btn btn-xs" href="{{route('citas.atender', $agenda->cita->id)}}" >Atender cita</a>
+                                            <a class="btn btn-info btn-xs" href="{{route('citas.atender', $agenda->cita->id)}}" >Atender cita</a>
                                         @else
-                                            <span>Atendida</span>
+                                          <!--  <span>Atendida</span>-->
+                                          <div class="badge badge-success">Atendida</div>
+
                                         @endif
                                     @endif
 

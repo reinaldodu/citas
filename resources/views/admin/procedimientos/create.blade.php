@@ -22,8 +22,15 @@
                         <!-- Descripción -->
                         <div>
                             <x-input-label for="descripcion" :value="__('Descripcion')" />
-                            <x-text-input id="descripcion" class="input block mt-1 w-full" type="text" name="descripcion" :value="old('descripcion')" />
+                            <textarea id="descripcion" cols="120" rows="5" class="textarea textarea-bordered mt-1 w-full" name="descripcion" :value="old('descripcion')"></textarea>
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                        </div>
+
+                         <!-- Preguntas -->
+                         <div>
+                            <x-input-label for="preguntas" :value="__('Preguntas')" />
+                            <textarea id="preguntas" cols="120" rows="5" class="textarea textarea-bordered mt-1 w-full" name="preguntas" :value="old('preguntas')"></textarea>
+                            <x-input-error :messages="$errors->get('preguntas')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-4">

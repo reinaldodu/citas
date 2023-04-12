@@ -19,12 +19,15 @@
                           <div class="divider"></div> 
                           <span class="badge badge-success">Rol: {{$user->rol->nombre}}</span>
                           <p> <span class="font-semibold">Documento:</span> {{ $user->documento }}</p>
-                          <p> <span class="font-semibold">Fecha nacimiento:</span> {{ $user->fecha_nacimiento }}</p>
+                          <div class="flex">
+                          <p> <span class="font-semibold">Fecha nacimiento:</span> {{ $user->fecha_nacimiento }} 
+                          <div class="badge badge-outline">{{$user->edad}} años</div></p>
+                          </div>
                           <p> <span class="font-semibold">Teléfono:</span> {{ $user->telefono }}</p>
                           <p> <span class="font-semibold">Email:</span> {{ $user->email }}</p>
                           <p> <span class="font-semibold">Estado:</span> 
                               @if ($user->estado == 1)
-                                  <span class="badge badge-warning">Activo</span>
+                                  <span class="badge badge-accent ">Activo</span>
                               @else
                                   <span class="badge badge-error">Inactivo</span>
                               @endif

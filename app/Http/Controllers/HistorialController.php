@@ -30,6 +30,7 @@ class HistorialController extends Controller
         //citas atendidas del mes de acuerdo al campo create_at
         $citas_atendidas_mes=Cita::where('estado', 2)->whereMonth('created_at', date('m'))->count();
         
+
         //Variable citas canceladas
         $citas_canceladas=Cita::where('estado', 3)->count();
         //citas canceladas del dia de acuerdo al campo create_at
@@ -57,7 +58,6 @@ class HistorialController extends Controller
         })->whereMonth('created_at', date('m'))->count();
 
 
-
         $citas_agendadas= [
             'citas_agendadas' => $citas_agendadas,
             'citas_agendadas_dia' => $citas_agendadas_dia,
@@ -72,7 +72,7 @@ class HistorialController extends Controller
             'citas_atendidas_mes' => $citas_atendidas_mes,
         ];
 
-        
+
         $citas_canceladas= [
             'citas_canceladas' => $citas_canceladas,
             'citas_canceladas_dia' => $citas_canceladas_dia,
@@ -86,14 +86,14 @@ class HistorialController extends Controller
             'procedimientos_semana' => $procedimientos_semana,
             'procedimientos_mes' => $procedimientos_mes,
         ];
-
-
-
         return view('admin.historial.index', compact('citas_agendadas', 'citas_atendidas','citas_canceladas','procedimientos'));
     }
+    
 
+    //Función para los reportes de los historiales
     public function reporte($tipo) {
         
+        //Mostrar reporte del historial de las citas agendadas por pacientes
         if ($tipo == 'agendadas_ttl') {
             $citas = Cita::paginate(10)->withQueryString();
             $tipo_reporte = 'Total citas agendadas';
@@ -105,9 +105,66 @@ class HistorialController extends Controller
             $tipo_reporte = 'Citas agendadas de la semana';
         } else if ($tipo == 'agendadas_mes') {
             $citas = Cita::whereMonth('created_at', date('m'))->paginate(10)->withQueryString();
-            $tipo_reporte = 'Total citas agendadas';
+            $tipo_reporte = 'Citas agendadas del mes';
         } 
-        //retornar vista
+
+        //Mostrar reporte del historial de las citas atendidas
+        if ($tipo == 'atendidas_ttl') {
+            $citas=Cita::where('estado', 2)->paginate(10)->withQueryString();
+            $tipo_reporte = 'Total citas atendidas';
+        } else if ($tipo == 'atendidas_dia') {
+            $citas=Cita::where('estado', 2)->whereDate('created_at', date('Y-m-d'))->paginate(10)->withQueryString();
+            $tipo_reporte = 'Citas atendidas del dia';
+        } else if ($tipo == 'atendidas_semana') {
+            $citas=Cita::where('estado', 2)->whereBetween('created_at', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))])->paginate(10)->withQueryString();
+            $tipo_reporte = 'Citas atendidas de la semana';
+        } else if ($tipo == 'atendidas_mes') {
+            $citas=Cita::where('estado', 2)->whereMonth('created_at', date('m'))->paginate(10)->withQueryString();
+            $tipo_reporte = 'Citas atendidas del mes';
+        } 
+
+
+       //Mostrar reporte del historial de las citas canceladas
+        if ($tipo == 'canceladas_ttl') {
+            $citas=Cita::where('estado', 3)->paginate(10)->withQueryString();
+            $tipo_reporte = 'Total citas canceladas';
+        } else if ($tipo == 'canceladas_dia') {
+            $citas=Cita::where('estado', 3)->whereDate('updated_at', date('Y-m-d'))->paginate(10)->withQueryString();
+            $tipo_reporte = 'Citas canceladas del dia';
+        } else if ($tipo == 'canceladas_semana') {
+            $citas=Cita::where('estado', 3)->whereBetween('updated_at', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))])->paginate(10)->withQueryString();
+            $tipo_reporte = 'Citas canceladas de la semana';
+        } else if ($tipo == 'canceladas_mes') {
+            $citas=Cita::where('estado', 3)->whereMonth('updated_at', date('m'))->paginate(10)->withQueryString();
+            $tipo_reporte = 'Citas canceladas del mes';
+        } 
+
+
+       //Mostrar reporte del historial de los procedimientos
+        if ($tipo == 'procedimientos_ttl') {
+            $citas=Cita::where('estado', 2)->whereHas('agenda', function($query){
+                $query->where('tipo', 2);
+            })->paginate(10)->withQueryString();           
+            $tipo_reporte = 'Total procedimientos';
+        } else if ($tipo == 'procedimientos_dia') {
+            $citas=Cita::where('estado', 2)->whereHas('agenda', function($query){
+                $query->where('tipo', 2);
+            })->whereDate('created_at', date('Y-m-d'))->paginate(10)->withQueryString();             
+            $tipo_reporte = 'Procedimientos del dia';
+        } else if ($tipo == 'procedimientos_semana') {
+            $citas=Cita::where('estado', 2)->whereHas('agenda', function($query){
+                $query->where('tipo', 2);
+            })->whereBetween('created_at', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))])->paginate(10)->withQueryString();        
+            $tipo_reporte = 'Procedimientos de la semana';
+        } else if ($tipo == 'procedimientos_mes') {
+            $citas=Cita::where('estado', 2)->whereHas('agenda', function($query){
+                $query->where('tipo', 2);
+            })->whereMonth('created_at', date('m'))->paginate(10)->withQueryString();  
+            $tipo_reporte = 'Procedimientos del mes';
+        } 
+
+
         return view('admin.historial.reporte', compact('citas', 'tipo_reporte'));
     }
+
 }

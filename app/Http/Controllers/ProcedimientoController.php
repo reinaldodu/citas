@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Procedimiento;
 use Illuminate\Http\Request;
-use App\Models\Cita;
 
 class ProcedimientoController extends Controller
 {
@@ -41,6 +40,7 @@ class ProcedimientoController extends Controller
         //Validaciones antes de guardar
         $request->validate([
             'nombre' => 'required',
+            'preguntas' => 'required',
         ]);
         //Guardar procedimiento
         Procedimiento::create($request->all());
@@ -91,6 +91,7 @@ class ProcedimientoController extends Controller
         //Actualizar procedimiento
         $request->validate([
             'nombre' => 'required',
+            'preguntas' => 'required',
         ]);
         $procedimiento->update($request->all());
         return redirect()->route('procedimientos.index')->with('info', 'El procedimiento se actualizó con éxito');

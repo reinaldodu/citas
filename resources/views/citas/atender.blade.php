@@ -42,7 +42,12 @@
                                 <x-input-error :messages="$errors->get('medicamento')" class="mt-2" />
 
                                 <div class="flex justify-end space-x-3 mt-5">
-                                    <button class="btn btn-primary btn-sm" type="submit">Guardar</button>
+                                <!--<button class="btn btn-primary btn-sm mr-5" type="submit">Programar</button>-->
+                        
+
+
+
+                                    <button class="btn btn-primary btn-sm mr-5" type="submit">Guardar</button>
                                     <a href="{{ route('citas.agenda_dia') }}" class="btn btn-sm btn-outline btn-primary">
                                         Cancelar
                                     </a>

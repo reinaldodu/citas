@@ -42,7 +42,7 @@
                                 <td>
 
                                     {{-- boton para ver detalle de la cita --}}
-                                <a class="btn btn-xs" href="{{route('citas.detalle', $cita->id)}}">Ver detalle</a>
+                                <a class="btn btn-xs btn-color" href="{{route('citas.detalle', $cita->id)}}">Consultar receta</a>
 
                                     
                                     {{-- boton detalle cita --}}
@@ -59,4 +59,10 @@
             </div>
         </div>
     </div>
+    <style>
+        .btn-color{
+            background-color:#049248;
+            color:white;
+        }
+    </style>
 </x-app-layout>

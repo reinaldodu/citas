@@ -6,19 +6,27 @@
     </x-slot>
                         
     <div class="py-12">
-
-        @if (session('error'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="flex p-6 text-gray-900 dark:text-gray-100 justify-center">
-                    <div class="shadow-xl p-10 w-96">
-                    <form method="POST" action="{{ route('agendas.store') }}" class="form-control w-full text-sm" />
+                
+               
+                <div class="shadow-xl p-10 w-96">
+
+                @if(session("error"))
+                
+                    <div class="alert shadow-lg mb-4">
+                        <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span>{{session("error")}}</span>
+                        </div>
+                    </div>
+        
+                @endif
+
+                    <form method="POST" action="{{ route('agendas.store') }}" class="form-control w-full text-sm">
                     @csrf
+
 
                         {{-- Fecha --}}
                         <div>
@@ -86,7 +94,7 @@
                             <button type="submit" class="btn btn-primary">
                                 Crear
                             </button>
-                            <a href="{{ route('agendas.index') }}" class="btn btn-outline btn-primary ml-5">
+                            <a href="{{ route('agendas.index') }}" class="btn btn-color ml-5">
                                 Cancelar
                             </a>
                         </div>
@@ -96,4 +104,17 @@
             </div>
         </div>
     </div>
+
+   <style>
+    .btn-color{
+        background-color:yellow;
+        color:black;
+    }
+
+    .btn-color:hover{
+    background-color: #fae041;
+   
+    }
+
+   </style>
 </x-app-layout>

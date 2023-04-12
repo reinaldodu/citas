@@ -16,5 +16,7 @@
     <p>Médico: {{$mailData["medico"]}}</p>
     <br>
     <p>Agradecemos su preferencia.</p>
+
+
 </body>
 </html>

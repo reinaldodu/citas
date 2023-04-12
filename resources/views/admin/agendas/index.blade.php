@@ -33,7 +33,8 @@
                             <!-- row 1 -->
                             @foreach ($agendas as $agenda)
                             <tr>
-                                <td>
+                                 <!--class="text-[10px] sm:text-[15px] lg:text-[19px]"   Cambiar tamaños de letra--> 
+                                <td >
                                     {{ $agenda->fecha }}
                                 </td>
                                 <td>

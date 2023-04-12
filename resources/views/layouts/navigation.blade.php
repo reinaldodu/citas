@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700" >
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -17,6 +17,8 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                
+    
                 
                 {{-- Si el usuario es administrador, se muestran los siguientes enlaces: --}}
                 @if (Auth::user()->rol_id == 1)
@@ -41,12 +43,14 @@
                         </x-nav-link>
                     </div>
 
-                    <!--historial-->
+                    <!--Historial-->
                     <div class="hidden space-x-8 md:-my-px md:ml-5 md:flex">
                         <x-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')">
                             {{ __('Historial') }}
                         </x-nav-link>
-                    </div>                    
+                    </div>
+
+                    
 
                 @endif
 
@@ -65,6 +69,14 @@
                             {{ __('Consultar historial') }}
                         </x-nav-link>
                     </div>
+
+                       <!--Procedimientos-->
+                       <div class="hidden space-x-8 md:-my-px md:ml-10 md:flex">
+                            <x-nav-link :href="route('procedimientos.programados')" :active="request()->routeIs('procedimientos.programados')">
+                                {{ __('Procedimientos') }}
+                            </x-nav-link>
+                        </div>
+                    
                 @endif
 
 
@@ -80,10 +92,9 @@
                       <!--Consultar historial de citas-->
                       <div class="hidden space-x-8 md:-my-px md:ml-10 md:flex">
                         <x-nav-link :href="route('citas.index')" :active="request()->routeIs('citas.index')">
-                            {{ __('Historial citas') }}
+                            {{ __('Mis citas') }}
                         </x-nav-link>
                     </div>
-
                 @endif
 
               
@@ -93,7 +104,7 @@
             <div class="hidden md:flex md:items-center md:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center mt-4 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">
@@ -105,18 +116,16 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Mi Perfil') }}
+                            {{ __('Mi perfil') }}
                         </x-dropdown-link>
 
-                        @if (Auth::user()->rol_id == 1)
-                            <!--Backup-->
-                            <x-dropdown-link :href="route('listar_backups')">
-                                {{ __('Backup') }}
-                            </x-dropdown-link>
-                        @endif
-
+                     <!--Respaldos-->
+                     @if(Auth::user()->rol_id==1)
+                        <x-dropdown-link :href="route('listar_backup')" :active="request()->routeIs('listar_backup')">
+                            {{ __('Respaldos') }}
+                        </x-dropdown-link>
+                    @endif
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -145,88 +154,104 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden md:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+        <div class="pt-4 mt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        {{-- Si usuario es administrador --}}
-        @if (Auth::user()->rol_id == 1)
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
-                    {{ __('Usuarios') }}
-                </x-responsive-nav-link>
-            </div>
-            {{-- Procedimientos --}}
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('procedimientos.index')" :active="request()->routeIs('procedimientos.index')">
-                    {{ __('Procedimientos') }}
-                </x-responsive-nav-link>
-            </div>
-            {{-- Agenda --}}
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('agendas.index')" :active="request()->routeIs('agendas.index')">
-                    {{ __('Agenda') }}
-                </x-responsive-nav-link>
-            </div>
-            {{-- Historial --}}
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')">
-                    {{ __('Historial') }}
-                </x-responsive-nav-link>
-            </div>
-        @endif
 
-        {{-- Si usuario es médico --}}
-        @if (Auth::user()->rol_id == 2)
-            {{-- Agenda --}}
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('citas.agenda_dia')" :active="request()->routeIs('citas.agenda_dia')">
-                    {{ __('Consultar agenda del día') }}
-                </x-responsive-nav-link>
-            </div>
-            {{-- Historial --}}
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('citas.historial_medico')" :active="request()->routeIs('citas.historial_medico')">
-                    {{ __('Consultar historial') }}
-                </x-responsive-nav-link>
-            </div>
-        @endif
-            
-        {{-- Si usuario es paciente --}}
-        @if (Auth::user()->rol_id == 3)
-            {{-- Agenda --}}
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('citas.buscar')" :active="request()->routeIs('citas.buscar')">
-                    {{ __('Agendar cita') }}
-                </x-responsive-nav-link>
-            </div>
-            {{-- Historial --}}
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('citas.index')" :active="request()->routeIs('citas.index')">
-                    {{ __('Historial citas') }}
-                </x-responsive-nav-link>
-            </div>
-        @endif
-
+      
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+        <div class="pt-4 pb-1 mt-2 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
-            <div class="mt-3 space-y-1">                
-                
+            {{-- Si el usuario es administrador, se muestran los siguientes enlaces: --}}
+                @if (Auth::user()->rol_id == 1)
+                    <!--Usuarios-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
+                            {{ __('Usuarios') }}
+                        </x-responsive-nav-link>
+                    </div>
+                    
+                    <!--Procedimientos-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('procedimientos.index')" :active="request()->routeIs('procedimientos.index')">
+                            {{ __('Procedimientos') }}
+                        </x-responsive-nav-link>
+                    </div>
+
+                    <!--Agenda-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('agendas.index')" :active="request()->routeIs('agendas.index')">
+                            {{ __('Agenda') }}
+                        </x-responsive-nav-link>
+                    </div>
+
+                    <!--Historial-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')">
+                            {{ __('Historial') }}
+                        </x-responsive-nav-link>
+                    </div>
+
+            
+
+                @endif
+
+                {{-- Si el usuario es médico se muestran los siguientes enlaces: --}}
+                @if (Auth::user()->rol_id == 2)
+                    <!--Citas del día-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('citas.agenda_dia')" :active="request()->routeIs('citas.agenda_dia')">
+                            {{ __('Consultar agenda del día') }}
+                        </x-responsive-nav-link>
+                    </div>
+
+                    <!--Consultar historial médico-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('citas.historial_medico')" :active="request()->routeIs('citas.historial_medico')">
+                            {{ __('Consultar historial') }}
+                        </x-responsive-nav-link>
+                    </div>
+                @endif
+
+
+                {{-- Si el usuario es paciente se muestran los siguientes enlaces: --}}
+                @if (Auth::user()->rol_id == 3)
+                    <!--Citas-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('citas.buscar')" :active="request()->routeIs('citas.buscar')">
+                            {{ __('Agendar cita') }}
+                        </x-responsive-nav-link>
+                    </div>
+
+                    <!--Consultar historial de citas-->
+                    <div class="mt-3 space-y-1">
+                        <x-responsive-nav-link :href="route('citas.index')" :active="request()->routeIs('citas.index')">
+                            {{ __('Mis citas') }}
+                        </x-responsive-nav-link>
+                    </div>
+
+                @endif
+
+            
+
+
+
+            <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Mi perfil') }}
+                    {{ __('Perfil') }}
                 </x-responsive-nav-link>
 
                 {{-- Si el usuario es administrador --}}
                 @if (Auth::user()->rol_id == 1)
                     <!--Backup-->
-                    <x-responsive-nav-link :href="route('listar_backups')">
-                        {{ __('Backup') }}
+                    <x-responsive-nav-link :href="route('listar_backup')">
+                        {{ __('Respaldos') }}
                     </x-responsive-nav-link>
                 @endif
 

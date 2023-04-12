@@ -21,12 +21,12 @@
 
 
                     {{-- Botón crear un nuevo usuario --}}
-                    <div class="flex justify-end mb-6">
-                        <a href="{{ route('usuarios.create') }}" class="btn btn-sm btn-outline btn-primary ring-2 rounded-full">Crear Usuario</a>
+                    <div class="flex justify-end mb-6 mt-5">
+                        <a href="{{ route('usuarios.create') }}"class="btn btn-sm btn-outline btn-primary ring-2 rounded-full">Crear Usuario</a>
                     </div>
                     
                     <!--Filtros-->
-                    <div class="flex justify-between mb-5">
+                    <div class="flex justify-between mb-10">
                         <!--Filtrar por nombre-->
                         <div class="flex justify-start">
                            <form action="{{route('usuarios.index')}}" method="GET">
@@ -38,7 +38,7 @@
                         </div>
                         <!--Filtrar por rol-->
 
-                        <div class="flex flex-col justify-end gap-2 md:flex-row">
+                        <div class="flex flex-col gap-2 sm:flex-row justify-end space-x-4">
                             <p>Filtros:</p>
                             <a href="{{route('usuarios.index')}}" class="btn btn-outline btn-xs btn-success rounded-xl">Todos</a>
                             <a href="{{route('usuarios.index',['rol'=>1])}}" class="btn btn-outline btn-xs btn-success rounded-xl">Administradores</a>
@@ -48,16 +48,14 @@
                     </div>
                     
                     <div class="overflow-x-auto">
-                        <table class="table table-zebra w-full">
+                        <table class="table table-zebra w-full" >
                           <!-- head -->
                           <thead>
                             <tr>
                               <th>Nombre</th>
                               <th></th>
                               <th>Documento</th>
-                              <th>Fecha_nacimiento</th>
                               <th>Teléfono</th>
-                              <th>Email</th>
                               <th>Rol</th>
                               <th>Estado</th>
                               <th></th>
@@ -67,28 +65,30 @@
                             <!-- row 1 -->
                             @foreach ($usuarios as $usuario)
                             <tr>
-                                <td>
-                                {{ $usuario->nombres .' ' . $usuario->apellidos }}
+                              
 
-                                </td>
                                 <td>
-                                    <div class="tooltip tooltip-right" data-tip=" Consultar usuario: {{ $usuario->nombres .' ' . $usuario->apellidos }}"">
-                                    <a class="font-bold btn-xs btn-primary rounded-lg" href="{{ route('usuarios.show', $usuario->id) }}">
-                                Detalles
-                                </a>
-                                    </div>
+                               
+                                {{ $usuario->nombres .' ' . $usuario->apellidos }}
+                               
                                 </td>
+
+                                <td>
+                               <div class="tooltip tooltip-right" data-tip=" Consultar usuario: {{ $usuario->nombres .' ' . $usuario->apellidos }}"">
+                                        <a class="font-bold btn-xs btn-primary rounded-lg" href="{{ route('usuarios.show', $usuario->id) }}">
+                                        Detalles
+                                        </a>
+                                </div>
+                                </td>
+                               
+                              
                                 <td>{{ $usuario->documento }}</td>
-                                <td>
-                                    {{ $usuario->fecha_nacimiento }}
-                                    <div class="badge badge-sm badge-outline">
-                                        {{ $usuario->edad }} años
-                                    </div>
-                                </td>
+                              
                                 <td>{{ $usuario->telefono }}</td>
-                                <td>{{ $usuario->email }}</td>
+                              
                                 <td>{{ $usuario->rol->nombre }}</td>
                                 <td>{{ $usuario->activo }}</td>
+
                                 <td>
                                     {{-- boton para editar usuario --}}
                                     <div class="tooltip tooltip-left" data-tip="Editar {{ $usuario->name }}">
@@ -119,8 +119,9 @@
                                                 <button type="submit" class="btn-ghost rounded-lg" onclick="return confirm('¿Desea activar el usuario?')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16" class="w-4 h-4">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-                                                      </svg>
-                                                      
+                                                    </svg>
+
+                                            
                                                 </button>
                                             </form>
                                         </div>

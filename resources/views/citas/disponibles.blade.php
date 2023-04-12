@@ -19,7 +19,7 @@
                                             <img class="mt-3 rounded-full" src="https://source.unsplash.com/random/200x200/?face&procedimiento={{ $cita->id }}" alt="Foto" />
                                         </figure>
                                         <div class="card-body">
-                                        <h2 class="card-title">Md. {{ $cita->medico->nombres . ' ' . $cita->medico->apellidos }}</h2>
+                                        <h2 class="card-title">Médico: {{ $cita->medico->nombres . ' ' . $cita->medico->apellidos }}</h2>
                                         <p><span class="font-semibold">Especialidad: </span> {{ $cita->procedimiento->nombre }}</p>
                                         <p><span class="font-semibold">Fecha: </span>{{ $cita->fecha }}</p>
                                         <p><span class="font-semibold">Hora: </span>{{ $cita->hora }}</p>

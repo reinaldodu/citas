@@ -22,9 +22,9 @@
 
                          {{-- Mostrar lista de procedimientos --}}
                          <div>
-                            <x-input-label for="procedimiento" :value="__('Procedimiento')" />
+                            <x-input-label for="procedimiento" :value="__('Servicio')" />
                             <select name="procedimiento" id="procedimiento" class="select select-bordered w-full max-w-xs">
-                                <option value="">Seleccione un procedimiento</option>
+                                <option value="">Seleccione un servicio</option>
                                 @foreach($procedimientos as $procedimiento)
                                     <option value="{{ $procedimiento->id }}">{{ $procedimiento->nombre }}</option>
                                 @endforeach
@@ -37,9 +37,7 @@
                             <button type="submit" class="btn btn-primary">
                                 Buscar
                             </button>
-                            <a href="{{ route('agendas.index') }}" class="btn btn-outline btn-primary ml-5">
-                                Cancelar
-                            </a>
+                          
                         </div>
                     </form>
                     </div>

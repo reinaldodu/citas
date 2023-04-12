@@ -21,17 +21,26 @@
                         </div>
 
                         <!-- Descripción -->
+            
                         <div>
-                            <x-input-label for="descripcion" :value="__('Descripcion')" />
+                            <x-input-label for="descripcion" :value="__('Descripción')" />
                             <textarea id="descripcion" cols="120" rows="10" class="textarea textarea-bordered mt-1 w-full"  type="text" name="descripcion" required>{{$procedimiento->descripcion}}</textarea>                            
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                        </div>
+
+                         <!-- Preguntas -->
+            
+                         <div>
+                            <x-input-label for="preguntas" :value="__('Preguntas frecuentes')" />
+                            <textarea id="preguntas" cols="120" rows="10" class="textarea textarea-bordered mt-1 w-full"  type="text" name="preguntas" required oninput="agregarNegrita()">{{$procedimiento->preguntas}}</textarea>                            
+                            <x-input-error :messages="$errors->get('preguntas')" class="mt-2" />
                         </div>
 
                         <!-- Activo/Inactivo -->
                         
                         <div class="flex justify-end items-center mt-5 mb-5">
                             <span>Inactivo</span>
-                            <input type="checkbox" name="activo" class="toggle ml-2 mr-2"  {{$procedimiento->activo ? 'checked': ''}} />
+                            <input type="checkbox" name="activo" class="toggle toggle-success ml-2 mr-2"  {{$procedimiento->activo ? 'checked': ''}} />
                             <span>Activo </span>
                         </div>
 
@@ -51,4 +60,23 @@
             </div>
         </div>
     </div>
+    <script>
+    function agregarNegrita() {
+        // Obtener el contenido de la textarea
+        var contenido = document.getElementById("preguntas").value;
+
+        // Buscar preguntas con signos de interrogación
+        var preguntas = contenido.match(/\?.*?\?/g);
+
+        // Agregar etiquetas de negrita a las preguntas
+        for (var i = 0; i < preguntas.length; i++) {
+            var preguntaNegrita = "<b>" + preguntas[i] + "</b>";
+            contenido = contenido.replace(preguntas[i], preguntaNegrita);
+        }
+
+        // Mostrar el contenido actualizado en la textarea
+        document.getElementById("preguntas").value = contenido;
+    }
+</script>
+    
 </x-app-layout>

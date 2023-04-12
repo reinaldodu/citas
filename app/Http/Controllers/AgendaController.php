@@ -51,16 +51,16 @@ class AgendaController extends Controller
             'procedimiento' => 'required',
         ]);
 
-        //validar que el medico no tenga una agenda en la misma fecha y hora
+            //validar que el medico no tenga agenda en la misma fecha y hora
         $agenda = Agenda::where('medico_id', $request->medico)
-            ->where('fecha', $request->fecha)
-            ->where('hora', '>=', $request->hora_inicial)
-            ->where('hora', '<=', $request->hora_final)
-            ->first();
-        if ($agenda) {
-            return redirect()->back()->with('error', 'El médico ya tiene una agenda en la fecha y hora seleccionada');
-        }
-        
+        ->where('fecha', $request->fecha)
+        ->where('hora', '>=', $request->hora_inicial)
+        ->where('hora', '<=', $request->hora_final)
+        ->first();
+                if ($agenda) {
+                    return redirect()->back()->with('error', 'El médico ya tiene una agenda en la fecha y hora seleccionada');
+            }
+
         //Mensajes de errores personalizados
         $messages = [
             'hora_final.after' => 'La hora final debe ser mayor a la hora inicial',
@@ -137,5 +137,17 @@ class AgendaController extends Controller
     {
         $agenda->delete();
         return redirect()->route('agendas.index')->with('success', 'Agenda eliminada correctamente');
+    }
+    
+    public function agendas_disponibles(Procedimiento $procedimiento)
+    {
+        $agendas = Agenda::where('procedimiento_id', $procedimiento->id)
+        ->where('estado', 1)
+        ->where('tipo', 2)
+        ->where('medico_id', auth()->user()->id)
+        ->where('fecha', '>', date('Y-m-d'))
+        ->get();
+        //retornar un json
+        return response()->json($agendas);
     }
 }
