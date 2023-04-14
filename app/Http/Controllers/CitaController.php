@@ -194,13 +194,43 @@ class CitaController extends Controller
         return view('citas.atender', compact('cita'));
     }
 
-    public function historial()
+    public function historial(Request $request)
     {
-        $citas=Cita::where('estado',2)
-                    ->whereHas('agenda',function($query){
-                      $query->where('medico_id',Auth()->user()->id);
-                    })->get();
-        return view('citas.historial', compact('citas'));
+        if($request->nombre || $request->tipo)
+        {
+            if($request->nombre)
+            {
+                //mostrar las citas al escribir el nombre del paciente con el medico autenticado
+                $citas=Cita::where('estado',2)
+                ->whereHas('agenda',function($query){
+                  $query->where('medico_id',Auth()->user()->id);
+                })
+                ->whereHas('paciente',function($query) use ($request){
+                    $query->where('name','like','%'.$request->nombre.'%');
+                })->get();
+                return view('citas.historial', compact('citas'));
+
+            }
+            if($request->tipo)
+            {
+                //mostrar las citas de acuerdo al tipo de agenda (1=consulta o 2=procedimiento) 
+                //con el medico autenticado
+                $citas=Cita::where('estado',2)
+                ->whereHas('agenda',function($query) use ($request){
+                    $query->where('medico_id',Auth()->user()->id)
+                    ->where('tipo',$request->tipo);
+                })->get();
+                return view('citas.historial', compact('citas'));
+            }
+        }
+        else{
+            $citas=Cita::where('estado',2)
+            ->whereHas('agenda',function($query){
+              $query->where('medico_id',Auth()->user()->id);
+            })->get();
+            return view('citas.historial', compact('citas'));
+        }
+       
     }
 
     public function registra(Request $request, Cita $cita)

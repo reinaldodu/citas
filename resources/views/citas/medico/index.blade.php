@@ -56,11 +56,8 @@
                                 <td>
 
                                     {{-- boton para ver detalle de la cita --}}
-                                <a class="btn btn-xs btn-color" href="{{route('citas.detalle', $cita->id)}}">Consultar receta</a>
-
-                                    
-                                    {{-- boton detalle cita --}}
-                                   
+                                <a class="btn btn-xs btn-outline" href="#">Editar</a>
+                                <a class="btn btn-xs btn-outline" href="#">Eliminar</a>
 
                                 </td>
                             </tr>

@@ -18,7 +18,8 @@
                               <th>Fecha</th>
                               <th>Hora</th>
                               <th>Paciente</th>
-                              <th>Procedimiento</th>
+                              <th>Servicio</th>
+                              <th>Tipo</th>
                               <th></th>
                             </tr>
                           </thead>
@@ -37,6 +38,9 @@
                                 </td>
                                 <td>
                                     {{ $cita->agenda->procedimiento->nombre }}
+                                </td>
+                                <td>
+                                    {{ $cita->agenda->tipo }}
                                 </td>
                                 
                                 <td>
